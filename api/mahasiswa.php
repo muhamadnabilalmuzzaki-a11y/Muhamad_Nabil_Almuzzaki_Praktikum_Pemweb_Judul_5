@@ -91,13 +91,15 @@ function handleGet(PDO $pdo, ?int $id): void {
         $search = isset($_GET['search']) ? trim($_GET['search']) : '';
         if (!empty($search)) {
             //Percobaan 5-2 Langkah 2 jika search ada
-            $smtmt = $pdo->prepare('SELECT id, npm, nama, program_studi, angkatan, email, created_at FROM mahasiswa WHERE 
-            npm LIKE :kw1 OR nama LIKE :kw2 OR program_studi LIKE :kw3 ORDER BY id DESC');
-            $kw = "%{$search}%";
-            $stmt->execute
-            ([':kw1' => $kw, 
-            ':kw2' => $kw, 
-            ':kw3' => $kw]);
+           $stmt = $pdo->prepare('SELECT id, npm, nama, program_studi, angkatan, email, created_at FROM mahasiswa WHERE
+npm LIKE :kw1 OR nama LIKE :kw2 OR program_studi LIKE :kw3 ORDER BY id DESC');
+
+$kw = "%{$search}%";
+$stmt->execute([
+    ':kw1' => $kw,
+    ':kw2' => $kw,
+    ':kw3' => $kw
+]);
         } else {
             //Percobaan 5-2 Langkah 2 jika tidak ada search
             $stmt = $pdo->query('SELECT id, npm, nama, program_studi, angkatan, email, created_at FROM mahasiswa ORDER BY id DESC');
